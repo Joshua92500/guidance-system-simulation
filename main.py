@@ -10,7 +10,7 @@ ax = plot.get_axis()
 
 targets = [
     target.Target(plot_area=ax, speed=1, x=50, y=50, z=50, size=100, label="Target 1"),
-    target.Target(plot_area=ax, speed=1.5, x=20, y=20, z=20, size=50, color="purple", label="Target 2")
+    target.Target(plot_area=ax, speed=1.15, x=20, y=20, z=20, size=50, color="purple", label="Target 2")
 ]
 
 interceptors = [
@@ -35,7 +35,7 @@ def update(frame):
         dots.append(t.dot)
 
     for i in interceptors:
-        i.update(frame)
+        i.update(frame, targets=targets)
         closest = i.radar.detect(targets)
         if closest:
             positions.append(f"{i.label}: ({i.x:.1f}, {i.y:.1f}, {i.z:.1f}) | Closest: {closest.label}")

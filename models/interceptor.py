@@ -1,3 +1,4 @@
+import numpy as np
 from .dot import Dot
 
 class Interceptor(Dot):
@@ -5,10 +6,22 @@ class Interceptor(Dot):
         super().__init__(plot_area, speed, x, y, z, size, color, label)
         self.radar = radar
 
-    def update(self, frame):
-        # Placeholder movement towards (100, 100, 100)
-        x = self.x + self.speed * 0.5
-        y = self.y + self.speed * 0.5
-        z = self.z + self.speed * 0.5
-        self.move_to(x, y, z)
+    def update(self, frame, targets=None):
+        # Move toward the closest target if radar and targets are provided
+        if self.radar and targets:
+            closest = self.radar.detect(targets)
+            if closest:
+                # Vector from self to target
+                direction = np.array(closest.position()) - np.array(self.position())
+                dist = np.linalg.norm(direction)
+                if dist > 0:
+                    # Normalize direction vector
+                    direction = direction / dist
+                    
+                    # Set speed to either self.speed or the distance to the target, whichever is smaller
+                    step = min(self.speed, dist)
+
+                    # Move towards the target
+                    new_pos = np.array(self.position()) + direction * step
+                    self.move_to(*new_pos)
         return self.dot
