@@ -3,24 +3,25 @@ from models.plot3d import Plot3D
 import models.target as target
 import models.interceptor as interceptor
 import models.radar as radar
+import models.guidance.predictive as predictive
 
 ANIMATION_INTERVAL_MS = 30
 plot = Plot3D()
 ax = plot.get_axis()
 
 targets = [
-    target.Target(plot_area=ax, speed=1, x=50, y=50, z=50, size=100, label="Target 1"),
-    target.Target(plot_area=ax, speed=1.15, x=20, y=20, z=20, size=50, color="purple", label="Target 2")
+    target.Target(plot_area=ax, speed=0.8, x=50, y=50, z=50, size=100, label="Target 1", show_prediction=True),
+    target.Target(plot_area=ax, speed=0.9, x=80, y=80, z=50, size=50, color="purple", label="Target 2", show_prediction=True)
 ]
 
-
 interceptors = [
-    interceptor.Interceptor(plot_area=ax, speed=2, label="Interceptor 1", fuse_time=5),
+    interceptor.Interceptor(plot_area=ax, speed=1.5, label="Interceptor 1", fuse_time=None, show_aim=True),
 ]
 
 # Attach radar(s) to interceptor(s)
 for i in interceptors:
-    i.radar = radar.Radar(owner=i, range=100)
+    i.radar = radar.Radar(owner=i, range=80)
+    i.add_guidance(predictive)
 
 
 '''
@@ -51,5 +52,5 @@ def update(frame):
     return dots
 
 
-ani = plot.animate(update, frames=300, interval=ANIMATION_INTERVAL_MS, blit=False)
+ani = plot.animate(update, frames=3000, interval=ANIMATION_INTERVAL_MS, blit=False, repeat=False)
 plt.show()

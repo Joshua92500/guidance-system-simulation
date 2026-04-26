@@ -33,5 +33,5 @@ class Plot3D:
     def get_axis(self):
         return self.ax
 
-    def animate(self, update_func, frames=300, interval=30, blit=False):
-        return FuncAnimation(self.fig, update_func, frames=frames, interval=interval, blit=blit)
+    def animate(self, update_func, frames=300, interval=30, blit=False, repeat=True):
+        return FuncAnimation(self.fig, update_func, frames=frames, interval=interval, blit=blit, repeat=repeat)
