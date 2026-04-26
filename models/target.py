@@ -15,8 +15,9 @@ class Target(Dot):
         max_turn_rate_deg=5,
         show_prediction=False,
         prediction_time=0.25,
+        radius=None,
     ):
-        super().__init__(plot_area, speed, x, y, z, size, color, label)
+        super().__init__(plot_area, speed, x, y, z, size, color, label, radius)
         self.max_turn_rate_deg = max_turn_rate_deg
         # Prediction marker settings
         self.show_prediction = show_prediction

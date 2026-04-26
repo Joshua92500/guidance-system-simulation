@@ -1,8 +1,9 @@
+import math
 import numpy as np
 from .physics import limit_turn
 
 class Dot:
-    def __init__(self, plot_area, speed, x, y, z, size=100, color="grey", label="Dot"):
+    def __init__(self, plot_area, speed, x, y, z, size=100, color="grey", label="Dot", radius=None):
         self.plot_area = plot_area
         self.speed = speed
         self.x = x
@@ -11,6 +12,23 @@ class Dot:
         self.size = size
         self.color = color
         self.label = label
+
+        if radius is not None:
+            self.radius = radius
+        else:
+            # Derive world-space collision radius from the matplotlib marker size.
+            # matplotlib size is area in points², so the visual radius is sqrt(s/π) points.
+            # Convert points to world units using the axis range and figure width.
+            try:
+                fig = plot_area.get_figure()
+                fig_width_pts = fig.get_size_inches()[0] * 72  # inches → points
+                x_min, x_max = plot_area.get_xlim()
+                world_range = x_max - x_min
+                # ~80 % of the figure width is occupied by the actual 3D plot area
+                world_units_per_pt = world_range / (fig_width_pts * 0.8)
+                self.radius = math.sqrt(self.size / math.pi) * world_units_per_pt
+            except Exception:
+                self.radius = 2.0
 
         # Initialize velocity vectors
         self.vx = 0.0

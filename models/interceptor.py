@@ -14,10 +14,11 @@ class Interceptor(Dot):
         label="Interceptor",
         radar=None,
         fuse_time=None,
-        max_turn_rate_deg=5,
-        show_aim=False
+        max_turn_rate_deg=10,
+        show_aim=False,
+        radius=None,
     ):
-        super().__init__(plot_area, speed, x, y, z, size, color, label)
+        super().__init__(plot_area, speed, x, y, z, size, color, label, radius)
         self.radar = radar
         self.fuse_time_seconds = fuse_time
         self.max_turn_rate_deg = max_turn_rate_deg
