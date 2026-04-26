@@ -10,6 +10,8 @@ This repository contains a simulation of interceptors and targets, including
 radar detection and a simple predictive guidance module. It is intended for education,
 experimentation, and prototyping of guidance concepts.
 
+<img width="1920" height="1080" alt="guidance_system_thumbnail" src="https://github.com/user-attachments/assets/6e5e9b98-2779-499a-8b9a-1f1ff958ff6b" />
+
 Key components
 --------------
 
@@ -38,7 +40,7 @@ pip install -r requirements.txt
 Running
 -------
 
-Run the demonstration with:
+Run the simulation with:
 
 ```bash
 python main.py
